@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <title>Rock Paper Scissors</title>
+</head>
+
+<body>
+
+    <script>
+
+        //A function for the computer's move.
+        function computerPlay() {
+            let computerMove;
+            let random = Math.floor(Math.random() * 3); //Generates a random number between 0-2.
+
+            switch (random) {
+                case (0):
+                    computerMove = "rock";
+                    break;
+
+                case (1):
+                    computerMove = "paper";
+                    break;
+
+                case (2):
+                    computerMove = "scissors";
+                    break;
+            }
+
+            return computerMove;
+        }
+
+        //A function to get a valid move from the user.
+        function userPlay() {
+            let userMove;
+            let validMove = false;
+
+            while (validMove == false) {
+                userMove = prompt("Enter your move:");
+                userMove = userMove.toLowerCase();
+
+                if (userMove == "rock" || userMove == "paper" || userMove == "scissors") {
+                    validMove = true;
+                    return userMove;
+                }
+                else {
+                    alert('"' + userMove + '"' + " was not a valid move. Please enter rock, paper, or scissors.")
+                }
+            }
+
+        }
+
+        //A function that calls back both the userPlay & computerPlay to get moves, then decides the winner.
+        function playRound(playerSelection, computerSelection) {
+            let winnerMessage;
+            let computerWin, userWin = 0;
+
+            switch (playerSelection) {
+                case ("rock"):
+                    if (computerSelection == "paper") {
+                        winnerMessage = "The computer plays paper. You lose!";
+                        computerWin = 1;
+                    }
+                    else if (computerSelection == "scissors") {
+                        winnerMessage = "The computer plays scissors. You win!";
+                        userWin = 1;
+                    }
+                    else if (computerSelection == "rock") {
+                        winnerMessage = "The computer plays rock. It's a draw!";
+                    }
+                    break;
+                case ("scissors"):
+                    if (computerSelection == "paper") {
+                        winnerMessage = "The computer plays paper. You win!";
+                        userWin = 1;
+                    }
+                    else if (computerSelection == "scissors") {
+                        winnerMessage = "The computer plays scissors. It's a draw!";
+                    }
+                    else if (computerSelection == "rock") {
+                        winnerMessage = "The computer plays rock. You lose!";
+                        computerWin = 1;
+                    }
+                    break;
+                case ("paper"):
+                    if (computerSelection == "paper") {
+                        winnerMessage = "The computer plays paper. It's a draw!";
+                    }
+                    else if (computerSelection == "scissors") {
+                        winnerMessage = "The computer plays scissors. You lose!";
+                        computerWin = 1;
+                    }
+                    else if (computerSelection == "rock") {
+                        winnerMessage = "The computer plays rock. You win!";
+                        userWin = 1;
+                    }
+                    break;
+            }
+
+            return winnerMessage;
+        }
+
+        //Game function. Plays a 5 round series with kept score & decides the winner.
+        function game() {
+            let userWins = 0, computerWins = 0, draw = 0;
+            let message;
+
+            for (i = 0; i < 5; i++) {
+                message = playRound(userPlay(), computerPlay());
+
+                if (message.includes("lose")) {
+                    computerWins++;
+                }
+                else if (message.includes("win")) {
+                    userWins++;
+                }
+                else if (message.includes("draw")) {
+                    draw++;
+                }
+
+
+                if (i == 4) {
+                    console.log(message);
+                    console.log("Game over!");
+
+                    if (computerWins > userWins) {
+                        console.log("You lose the series!");
+                        console.log("User: " + userWins + " Computer: " + computerWins + " Draw: " + draw);
+                    }
+                    else if (userWins > computerWins) {
+                        console.log("You win the series!");
+                        console.log("User: " + userWins + " Computer: " + computerWins + " Draw: " + draw);
+                    }
+                    else if (userWins == computerWins) {
+                        console.log("The series is a tie!");
+                        console.log("User: " + userWins + " Computer: " + computerWins + " Draw: " + draw);
+                    }
+                }
+                else {
+                    console.log(message);
+                    console.log("User: " + userWins + " Computer: " + computerWins + " Draw: " + draw);
+                }
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
