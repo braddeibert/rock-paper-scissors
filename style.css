@@ -1,0 +1,28 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: url(https://images.freecreatives.com/wp-content/uploads/2016/02/Old-Paper-Background-For-Free-.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: block;
+    text-align: center;
+}
+
+h3 {
+    font-size: xx-large;
+    text-align: right;
+}
+
+img {
+    padding: 10px;
+    margin: 50px;
+}
+
+img:hover {
+    transform: scale(1.1);
+    background: rgba(255, 230, 0, 0.5);
+}

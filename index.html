@@ -2,12 +2,105 @@
 <html lang="en">
 
 <head>
-    <title>Rock Paper Scissors</title>
+    <title>Rock Paper Scissors Game</title>
+    <link rel="stylesheet" href="C:\Users\brade\Projects\Odin_Project\js-rock-paper-scissors\style.css">
 </head>
 
 <body>
+    <!--Div for displaying game results-->
+    <div id="container">
+        <h3 id="score">0-0-0</h3>
+    </div>
+    
+    <!--Clickable images for selecting move:-->
+    <img id="rock" src="C:\Users\brade\Projects\Odin_Project\js-rock-paper-scissors\images\rock.png" height="250" width="250">
+    <img id="paper" src="C:\Users\brade\Projects\Odin_Project\js-rock-paper-scissors\images\paper.png" height="250" width="250">
+    <img id="scissors" src="C:\Users\brade\Projects\Odin_Project\js-rock-paper-scissors\images\scissors.png" height="250" width="250">
 
     <script>
+        let playerMove;
+        let win = 0, lose = 0, draw = 0;
+        
+
+        //Selects all images on the page, stores them in a nodelist:
+        var imgs = document.querySelectorAll('img');
+
+        //Iterates through nodelist & attaches an event listener to each image:
+        imgs.forEach((img) => {
+
+            img.addEventListener('click', (e) => {
+                playerMove = img.id;
+
+                switch (game()){
+                    case ("win"):
+                        win++;
+                    break;
+                    case ("lose"):
+                        lose++;
+                    break;
+                    case ("draw"):
+                        draw++;
+                    break;
+                }
+
+                //Checking for winner (first to 5):
+                if (win == 5){
+                    var container = document.querySelector('#container');
+
+                    var winner = document.createElement('h2');
+                    winner.textContent = "You win!";
+                    winner.setAttribute('style', 'color: white; font-size: 50px; margin-top: 250px;');
+                    container.appendChild(winner);
+
+                    //Removing game images once winner is decided:
+                    var imgs = document.querySelectorAll('img');
+                    imgs.forEach((img) => {
+                        img.parentNode.removeChild(img);
+                    });
+
+                    //Changing background to fireworks:
+                    var page = document.querySelector('body');
+
+                    page.setAttribute('style', 'background-image: url(file:///C:/Users/brade/Projects/Odin_Project/js-rock-paper-scissors/images/fireworks.webp);');
+                    page.parentNode.appendChild(page);
+                    
+                }
+                else if (lose == 5){
+                    var container = document.querySelector('#container');
+
+                    var winner = document.createElement('h2');
+                    winner.textContent = "You lose!";
+                    winner.setAttribute('style', 'font-size: 50px; color: white; margin-top: 250px;');
+                    container.appendChild(winner);
+
+                    //Removing game images once winner is decided:
+                    var imgs = document.querySelectorAll('img');
+                    imgs.forEach((img) => {
+                        img.parentNode.removeChild(img);
+                    }); 
+
+                    //Changing background to Will Ferrell:
+                    var page = document.querySelector('body');
+
+                    page.setAttribute('style', 'background-image: url(file:///C:/Users/brade/Projects/Odin_Project/js-rock-paper-scissors/images/will-ferrell.webp);');
+                    page.parentNode.appendChild(page)
+
+                }
+
+                let record = win + "-" + lose + "-" + draw;
+
+                //Updating h3 on page keeping score:
+                var container = document.querySelector('#container');
+                
+                var score = container.querySelector('#score');
+                score.textContent = record;
+                if (win == 5 || lose == 5){
+                    score.setAttribute('style', 'color: white; text-align: center;');
+                }
+                container.appendChild(score);
+            })
+        });
+         
 
         //A function for the computer's move.
         function computerPlay() {
@@ -31,6 +124,7 @@
             return computerMove;
         }
 
+        /**
         //A function to get a valid move from the user.
         function userPlay() {
             let userMove;
@@ -50,6 +144,7 @@
             }
 
         }
+        **/
 
         //A function that calls back both the userPlay & computerPlay to get moves, then decides the winner.
         function playRound(playerSelection, computerSelection) {
@@ -103,23 +198,24 @@
 
         //Game function. Plays a 5 round series with kept score & decides the winner.
         function game() {
-            let userWins = 0, computerWins = 0, draw = 0;
             let message;
 
-            for (i = 0; i < 5; i++) {
-                message = playRound(userPlay(), computerPlay());
+            //for (i = 0; i < 5; i++) {
+                message = playRound(playerMove, computerPlay());
+                alert(message);
+                
 
                 if (message.includes("lose")) {
-                    computerWins++;
+                    return "lose";
                 }
                 else if (message.includes("win")) {
-                    userWins++;
+                    return "win";
                 }
                 else if (message.includes("draw")) {
-                    draw++;
+                    return "draw";
                 }
 
-
+                /**
                 if (i == 4) {
                     console.log(message);
                     console.log("Game over!");
@@ -141,10 +237,10 @@
                     console.log(message);
                     console.log("User: " + userWins + " Computer: " + computerWins + " Draw: " + draw);
                 }
-            }
+                **/
+            //}
 
         }
-
     </script>
 
 </body>
